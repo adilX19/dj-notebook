@@ -23,7 +23,83 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'notes.apps.NotesConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+
+# CK-EDITOR configurations
+CKEDITOR_CONFIGS = {
+
+    'simple':{
+      'skin': 'moono-lisa',
+      'toolbar': 'Custom',
+      'toolbar_Custom': [
+          ['Bold'],
+          ['NumberedList', 'BulletedList'],
+      ],
+
+      'width': 690
+    
+    },
+
+    'moderate':{
+      'skin': 'moono-lisa',
+      'toolbar': 'Custom',
+      'toolbar_Custom': [
+          ['Bold', 'Italic'],
+          ['Table', 'HorizontalRule'],
+          ['TextColor', 'BGColor'],
+          ['NumberedList', 'BulletedList'],
+          ['Indent', 'Outdent'],
+          ['Maximize'],
+      ],
+      'width': 690,
+      'height': 490
+    },
+
+
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'],
+            ['JustifyLeft', 'HorizontalRule' ,'JustifyCenter','JustifyRight','JustifyBlock'],
+            ['NumberedList','BulletedList'],
+            ['Indent','Outdent'],
+            ['Maximize'],
+        ],
+        'tabSpaces': 4,
+        'extraPlugins': ','.join(
+            [
+                'codesnippet',
+                'uploadimage',
+                'uploadwidget',
+                'autoembed',
+                'clipboard',
+                'uicolor',
+                'stylesheetparser',
+                'tabletools',
+                'templates',
+                'exportpdf'
+            ]
+        ),
+        'codeSnippet_theme': 'monokai_sublime',
+        'height': 390,
+        'width': 690,
+    },
+
+    'my_ckeditor': {
+        'toolbar': 'Basic',
+    }
+}
+
+CKEDITOR_RESTRICT_BY_USER = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,6 +124,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notes.context_processors.get_all_notes_type',
+                'notes.context_processors.get_url_name',
             ],
         },
     },
@@ -93,7 +171,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Karachi'
 
 USE_I18N = True
 
@@ -107,11 +185,16 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = 'media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_builtin')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
